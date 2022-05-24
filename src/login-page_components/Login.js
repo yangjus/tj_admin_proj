@@ -4,6 +4,7 @@ import { Box, AppBar, Toolbar, Typography, Checkbox, Grid, TextField, FormContro
 import { Link } from "react-router-dom";
 import './Login.css';
 import db from '../firebase.js';
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc  } from "firebase/firestore";
 
 const Login = (props) => {
     const [username, setUsername] = useState();
@@ -12,6 +13,8 @@ const Login = (props) => {
     function getCredentials(){
       console.log(username)
       console.log(password)
+      getDocs(collection(db, "teachers"))
+      .then((allDocs) => {allDocs.forEach((doc) => console.log(doc.data))})
     }
 
     return (
