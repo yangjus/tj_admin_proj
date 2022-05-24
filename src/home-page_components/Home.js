@@ -7,15 +7,15 @@ import { Link } from "react-router-dom";
 const Home = (props) => {
 
     const btnSize = {
-        maxWidth: "300px",
-        maxHeight: "250px",
-        minWidth: "300px",
-        minHeight: "250px",
+        maxWidth: "40vh",
+        maxHeight: "45vh",
+        minWidth: "40vh",
+        minHeight: "45vh",
     };
 
     const photoSize = {
-        height: "200px",
-        width: "600px",
+        height: "30vh",
+        width: "100vh",
     }
 
     return (
@@ -45,7 +45,7 @@ const Home = (props) => {
                 </Grid>
             </Grid>
             <br></br>
-            <Grid backgroundSize='contained'>
+            <Grid>
                 <img src={TJES} style={photoSize}/>
             </Grid>
         </>
