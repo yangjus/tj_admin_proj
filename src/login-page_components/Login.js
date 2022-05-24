@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Box, AppBar, Toolbar, Typography, Checkbox, Grid, TextField, FormControlLabel, Paper, Button } from '@mui/material';
 import { Link } from "react-router-dom";
 import './Login.css';
+import db from '../firebase.js';
 
 const Login = (props) => {
     const [username, setUsername] = useState();
