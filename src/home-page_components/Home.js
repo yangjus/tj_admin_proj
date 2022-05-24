@@ -1,17 +1,14 @@
 import React from "react";
 import Navbar from "../Navbar.js";
-import {Grid, Button, Card} from '@mui/material';
+import {Grid, Button} from '@mui/material';
 
 const Home = (props) => {
 
-    const btn = {
-        border: "2px solid black",
-        backgroundColor: "white",
-        color: "dodgerblue",
-        padding: "14px 28px",
-        fontSize: "16px",
-        cursor: "pointer",
-        borderColor: "#2196F3",
+    const btnSize = {
+        maxWidth: "300px",
+        maxHeight: "300px",
+        minWidth: "300px",
+        minHeight: "300px",
     };
 
     return (
@@ -20,16 +17,16 @@ const Home = (props) => {
             <h1>Home Page</h1>
             <Grid container spacing={1}>
                 <Grid item xs={3}>
-                    <Button style={btn}>Testing</Button>
+                    <Button variant='contained' fontSize="30" style={btnSize}>Student Directory</Button>
                 </Grid>
                 <Grid item xs={3}>
-                    <Button style={btn}>Testing</Button>
+                    <Button variant='contained' fontSize="30" style={btnSize}>Teacher Directory</Button>
                 </Grid>
                 <Grid item xs={3}>
-                    <Button style={btn}>Testing</Button>
+                    <Button variant='contained' fontSize="30" style={btnSize}>Classes</Button>
                 </Grid>
                 <Grid item xs={3}>
-                    <Button style={btn}>Testing</Button>
+                    <Button variant='contained' fontSize="30" style={btnSize}>Calendar</Button>
                 </Grid>
             </Grid>
         </>
