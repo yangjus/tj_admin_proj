@@ -1,9 +1,13 @@
 import React from "react";
+import Navbar from "../Navbar.js";
 
 const Home = (props) => {
 
     return (
-        <h1>Home Page</h1>
+        <>
+            <Navbar/>
+            <h1>Home Page</h1>
+        </>
     );
 };
 
