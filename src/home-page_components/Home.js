@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Navbar.js";
 import {Grid, Button} from '@mui/material';
+import TJES from './images/TJES.JPG'
 
 const Home = (props) => {
 
@@ -29,6 +30,7 @@ const Home = (props) => {
                     <Button variant='contained' fontSize="30" style={btnSize}>Calendar</Button>
                 </Grid>
             </Grid>
+            <img src={TJES} />
         </>
     );
 };
