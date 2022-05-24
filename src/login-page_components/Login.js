@@ -1,9 +1,8 @@
 import React from "react";
 import { useState } from "react"
-import { Box, AppBar, Toolbar, Typography, Checkbox, Grid, TextField, FormControlLabel, Paper, Button } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, TextField, Button } from '@mui/material';
 import { Link } from "react-router-dom";
 import './Login.css';
-import db from '../firebase.js';
 
 const Login = (props) => {
     const [username, setUsername] = useState();
@@ -38,9 +37,11 @@ const Login = (props) => {
           <div className="Password">
             <TextField label="Password" onChange={(e) => {setPassword(e.target.value)}} type={'password'}></TextField>
           </div>
-          <div className="LoginButton">
-            <Button variant="contained" onClick={getCredentials}> Login </Button>
-          </div>
+          <Link to="/home">
+            <div className="LoginButton">
+              <Button variant="contained" onClick={getCredentials}> Login </Button>
+            </div>
+          </Link>
         </div>
     );
 };

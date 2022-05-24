@@ -24,6 +24,15 @@ const Navbar = () => {
                     <Link to="/home" style={linkStyle}>
                         <Button color="inherit">Home</Button>
                     </Link>
+                    <Link to="/student-directory" style={linkStyle}>
+                        <Button color="inherit">Student Directory</Button>
+                    </Link>
+                    <Link to="/teacher-directory" style={linkStyle}>
+                        <Button color="inherit">Teacher Directory</Button>
+                    </Link>
+                    <Link to="/calendar" style={linkStyle}>
+                        <Button color="inherit">Calendar</Button>
+                    </Link>
                     <Link to="/" style={linkStyle}>
                         <Button color="inherit">Logout</Button>
                     </Link>
