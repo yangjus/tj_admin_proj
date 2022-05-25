@@ -5,9 +5,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import db from '../firebase.js'
-import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
+import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
+import { useLocation } from "react-router-dom";
 
 const StudentDirectory = () => {
+
+    const {state} = useLocation();
+    const { username } = state; /*the user */
 
     const [students, setStudents] = useState([])
     
