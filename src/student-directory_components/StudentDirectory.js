@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar.js';
-import {List, ListItem, ListItemText, IconButton, Grid, Divider} from '@mui/material';
+import {List, ListItem, ListItemIcon, ListItemText, IconButton, Grid, Divider} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import AddReactionIcon from '@mui/icons-material/AddReaction';
 import db from '../firebase.js'
 import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
 
 const StudentDirectory = () => {
 
     const [students, setStudents] = useState([])
-
+    
     useEffect(() => {
-    const students = []
-    getDocs(collection(db, "students"))
-    .then((allStudents) => allStudents.forEach((student) => students.push({id: student.id, ...student.data()}))
-    )
-    setStudents(students)
-    }, [db])
+        const students = []
+        getDocs(collection(db, "students"))
+        .then((allStudents) => allStudents.forEach((student) => students.push({id: student.id, ...student.data()})))
+        .then(setStudents([...students]))
+    }, [db]);
+
+    const getStudents = async() => {
+        try {
+            const list = [];
+            let snapshot = await getDocs(collection(db, "students"))
+
+        } catch (e) {
+            alert("error");
+        }
+    }
 
     const editFirstName = (studentID, newFirstName) => {
         updateDoc(doc(db, "students", studentID)), {
@@ -49,6 +60,13 @@ const StudentDirectory = () => {
         width: '80vh',
     };
 
+    const hoverStyle = {
+        bgcolor: '#ADD8E6',
+        '&:hover $child': {
+            color: 'blue'
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -59,20 +77,34 @@ const StudentDirectory = () => {
                     alignItems="center"
                     justifyContent="center"
                     style={{ minHeight: '10vh' }}>
+                <Grid container spacing={2} justifyContent="right" alignItems="right">
+                <IconButton padding="5px">
+                    <AddReactionIcon />
+                </IconButton>
+                </Grid>
                 <List sx={{ ...commonStyles, borderRadius: '4px'}} component="nav" aria-label="mailbox folders">
-                    <ListItem secondaryAction={
-                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
-                            <EditIcon />
-                        </IconButton>} button>
-                        <ListItemText primary="Fred Dundert" fontsize="0.7em"/>
-                    </ListItem>
-                    <Divider light/>
-                    <ListItem secondaryAction={
-                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
-                            <EditIcon />
-                        </IconButton>} button>
-                        <ListItemText primary="Danny Sins" fontsize="0.7em"/>
-                    </ListItem>
+                    {
+                        students.map((student) => {
+                            return (
+                                <>
+                                <ListItem style={{ hoverStyle }}>
+                                    <ListItemText primary={student.firstname} fontSize="0.7em"/>
+                                    <ListItemIcon>
+                                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </ListItemIcon>
+                                    <ListItemIcon>
+                                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'red'}}>
+                                            <PersonRemoveIcon />
+                                        </IconButton>
+                                    </ListItemIcon>
+                                </ListItem>
+                                <Divider light/>
+                                </>
+                            )
+                        })
+                    }
                 </List>
             </Grid>
         </>
