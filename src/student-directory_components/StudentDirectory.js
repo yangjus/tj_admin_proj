@@ -14,23 +14,18 @@ const StudentDirectory = () => {
     const { username } = state; /*the user */
 
     const [students, setStudents] = useState([])
+
+    const printStudents = () => {
+        const documents = getDocs(collection(db, "students"));
+        let list = [];
+        documents.forEach((student) => list.push({id: student.id, ...student.data()}));
+        setStudents(list);
+    }
     
     useEffect(() => {
-        const students = []
-        getDocs(collection(db, "students"))
-        .then((allStudents) => allStudents.forEach((student) => students.push({id: student.id, ...student.data()})))
-        .then(setStudents([...students]))
-    }, [db]);
-
-    const getStudents = async() => {
-        try {
-            const list = [];
-            let snapshot = await getDocs(collection(db, "students"))
-
-        } catch (e) {
-            alert("error");
-        }
-    }
+        printStudents();
+        console.log(documents);
+    }, []);
 
     const editFirstName = (studentID, newFirstName) => {
         updateDoc(doc(db, "students", studentID)), {
@@ -81,11 +76,10 @@ const StudentDirectory = () => {
                     alignItems="center"
                     justifyContent="center"
                     style={{ minHeight: '10vh' }}>
-                <Grid container spacing={2} justifyContent="right" alignItems="right">
+                <p>Add Student: </p>
                 <IconButton padding="5px">
                     <AddReactionIcon />
                 </IconButton>
-                </Grid>
                 <List sx={{ ...commonStyles, borderRadius: '4px'}} component="nav" aria-label="mailbox folders">
                     {
                         students.map((student) => {
