@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Box, AppBar, Toolbar, Typography, TextField, Button } from '@mui/material';
 import { Link } from "react-router-dom";
 import './Login.css';
+import db from "../firebase.js"
 
 const Login = (props) => {
     const [username, setUsername] = useState();
@@ -13,6 +14,8 @@ const Login = (props) => {
       console.log(password)
     }
 
+    console.log(db)
+    
     return (
         <div className="Login">
           <Box sx={{ flexGrow: 1 }}>
