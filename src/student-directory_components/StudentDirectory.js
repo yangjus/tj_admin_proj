@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar.js';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import IconButton from '@mui/material/IconButton';
+import {List, ListItem, ListItemText, IconButton, Grid, Divider} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import Grid from '@mui/material/Grid';
 import db from '../firebase.js'
 import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
 
@@ -44,21 +41,37 @@ const StudentDirectory = () => {
         }
     }
 
+    const commonStyles = {
+        bgcolor: '#ADD8E6',
+        borderColor: 'text.primary',
+        m: 1,
+        border: 1,
+        width: '80vh',
+    };
+
     return (
         <>
             <Navbar />
             <h1>Student Directory</h1>
-            <Grid justify="center">
-                <List>
+            <Grid   container
+                    spacing={0}
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    style={{ minHeight: '10vh' }}>
+                <List sx={{ ...commonStyles, borderRadius: '4px'}} component="nav" aria-label="mailbox folders">
                     <ListItem secondaryAction={
-                    <IconButton edge="end" aria-label="comments">
-                        <EditIcon />
-                    </IconButton> } disablePadding>
-                        Hello
+                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
+                            <EditIcon />
+                        </IconButton>} button>
+                        <ListItemText primary="Fred Dundert" fontsize="0.7em"/>
                     </ListItem>
-                    <ListItem>
-                        Hello2
-                        <EditIcon edge="end"/>
+                    <Divider light/>
+                    <ListItem secondaryAction={
+                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
+                            <EditIcon />
+                        </IconButton>} button>
+                        <ListItemText primary="Danny Sins" fontsize="0.7em"/>
                     </ListItem>
                 </List>
             </Grid>
