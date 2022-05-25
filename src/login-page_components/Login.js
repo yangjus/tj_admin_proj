@@ -1,23 +1,33 @@
 import React from "react";
-import { useState } from "react"
-import { Box, AppBar, Toolbar, Typography, Checkbox, Grid, TextField, FormControlLabel, Paper, Button } from '@mui/material';
+import { useState, useEffect } from "react"
+import { Box, AppBar, Toolbar, Typography, TextField, Button } from '@mui/material';
 import { Link } from "react-router-dom";
 import './Login.css';
 import db from '../firebase.js';
 import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc  } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = (props) => {
+    let navigate = useNavigate();
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+    const [logged, setLogged] = useState(false);
 
     function getCredentials(){
-      console.log(username)
-      console.log(password)
-      getDocs(collection(db, "teachers"))
-      .then((allDocs) => {allDocs.forEach((doc) => console.log(doc.data))})
+      getDocs(collection(db, "staff"))
+      .then((allDocs) => {allDocs.forEach((d) => (((String(username) == String(d.data().username)) && (String(password) == String(d.data().password)))
+        ?(setLogged(true), setDoc(doc(db, "staff", "teacher1"), {
+            isLogged: true,
+            isAdmin: d.data().isAdmin,
+            name: d.data().name,
+            password: d.data().password,
+            username: d.data().username
+          }), navigate("/home", { state: {username: d.data().username }}))
+        : setLogged(false)))})
     }
 
-    return (
+    return (  
         <div className="Login">
           <Box sx={{ flexGrow: 1 }}>
               <AppBar position="static">
@@ -41,9 +51,9 @@ const Login = (props) => {
           <div className="Password">
             <TextField label="Password" onChange={(e) => {setPassword(e.target.value)}} type={'password'}></TextField>
           </div>
-          <div className="LoginButton">
-            <Button variant="contained" onClick={getCredentials}> Login </Button>
-          </div>
+            <div className="LoginButton">
+              <Button variant="contained" onClick={getCredentials}> Login </Button>
+            </div>
         </div>
     );
 };
