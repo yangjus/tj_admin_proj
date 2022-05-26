@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar.js';
-import {List, ListItem, ListItemIcon, ListItemText, IconButton, Grid, Divider} from '@mui/material';
+import {List, ListItem, ListItemIcon, ListItemText, IconButton, Grid, Divider, TextField} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import db from '../firebase.js'
 import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
 import { useLocation } from "react-router-dom";
+import {Modal, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
 
 const StudentDirectory = () => {
 
     const {state} = useLocation();
     const { username } = state; /*the user */
+    const [isClicked, setIsClicked] = useState(false);
 
     const [students, setStudents] = useState([])
 
-    const printStudents = () => {
-        const documents = getDocs(collection(db, "students"));
+    const printStudents = async () => {
+        const documents = await getDocs(collection(db, "students"));
+        console.log(documents);
         let list = [];
         documents.forEach((student) => list.push({id: student.id, ...student.data()}));
         setStudents(list);
@@ -24,7 +27,6 @@ const StudentDirectory = () => {
     
     useEffect(() => {
         printStudents();
-        console.log(documents);
     }, []);
 
     const editFirstName = (studentID, newFirstName) => {
@@ -49,6 +51,10 @@ const StudentDirectory = () => {
         updateDoc(doc(db, "students", studentID)), {
             grade: newGrade
         }
+    }
+
+    const modalClick = () => {
+        setIsClicked(!isClicked)
     }
 
     const commonStyles = {
@@ -84,11 +90,11 @@ const StudentDirectory = () => {
                     {
                         students.map((student) => {
                             return (
-                                <>
+                                <div key={student.id}>
                                 <ListItem style={{ hoverStyle }}>
                                     <ListItemText primary={student.firstname} fontSize="0.7em"/>
                                     <ListItemIcon>
-                                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
+                                        <IconButton onClick={modalClick} edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
                                             <EditIcon />
                                         </IconButton>
                                     </ListItemIcon>
@@ -99,12 +105,25 @@ const StudentDirectory = () => {
                                     </ListItemIcon>
                                 </ListItem>
                                 <Divider light/>
-                                </>
+                                </div>
                             )
                         })
                     }
                 </List>
             </Grid>
+            <Dialog open={isClicked} keepMounted onClose={modalClick}>
+                <DialogTitle>{"Example Student"}</DialogTitle>
+                <DialogContent>
+                    <TextField autoFocus margin="dense" id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
+                    <TextField autoFocus margin="dense" id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
+                    <TextField autoFocus margin="dense" id="grade" label="Grade" type="text" fullWidth variant="standard"/>
+                    <TextField autoFocus margin="dense" id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={modalClick}>Save</Button>
+                    <Button onClick={modalClick}>Exit</Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
 }
