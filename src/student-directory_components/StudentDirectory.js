@@ -21,7 +21,7 @@ const StudentDirectory = () => {
         documents.forEach((student) => list.push({id: student.id, ...student.data()}));
         setStudents(list);
     }
-    
+
     useEffect(() => {
         printStudents();
     }, []);

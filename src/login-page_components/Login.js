@@ -3,10 +3,9 @@ import { useState, useEffect } from "react"
 import { Box, AppBar, Toolbar, Typography, TextField, Button } from '@mui/material';
 import { Link } from "react-router-dom";
 import './Login.css';
-import db from '../firebase.js';
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc  } from "firebase/firestore";
+import db from "../firebase.js"
 import { useNavigate } from "react-router-dom";
-
+import {collection, doc, getDocs, updateDoc, setDoc} from "firebase/firestore";
 
 const Login = (props) => {
     let navigate = useNavigate();
@@ -27,7 +26,9 @@ const Login = (props) => {
         : setLogged(false)))})
     }
 
-    return (  
+    console.log(db)
+
+    return (
         <div className="Login">
           <Box sx={{ flexGrow: 1 }}>
               <AppBar position="static">
