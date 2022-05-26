@@ -63,6 +63,17 @@ const SchoolCalendar = () => {
       handleaddClose();
     }
 
+    const deleteEvent = async(title, date) =>{
+      await deleteDoc(doc(db, "events", title));
+      let list = []
+      for (let i = 0; i < events.length; i++) {
+        if (events[i]["title"] != title){
+          list.push(events[i])
+        }
+      }
+      setEvents(list)
+    }
+
     return (
         <>
         <Navbar/>
@@ -94,14 +105,14 @@ const SchoolCalendar = () => {
             </DialogContent>
         </Dialog>
         <Dialog open={ModelDelOpen}>
-            <Grid item marginTop={2} marginLeft={35}>
+            <Grid item marginTop={2} marginLeft={36}>
               <ClearIcon onClick={handleDelClose}></ClearIcon>
             </Grid>
             <DialogTitle>List of Events</DialogTitle>
             <DialogContent>
             {Object.entries(events).map(([key, value]) => (
               <div key={key}>
-                <Event data={value}/>
+                <p>Name: {value.title} Date: {value.date} <Button onClick={() => deleteEvent(value.title, value.date)}>Delete</Button></p>
               </div>
             ))}
             </DialogContent>
