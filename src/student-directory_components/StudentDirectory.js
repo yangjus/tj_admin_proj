@@ -53,7 +53,7 @@ const StudentDirectory = () => {
         }
     }
 
-    const modalClick = () => {
+    function modalClick(studentID){
         setIsClicked(!isClicked)
     }
 
@@ -76,16 +76,13 @@ const StudentDirectory = () => {
         <>
             <Navbar />
             <h1>Student Directory</h1>
-            <Grid   container
-                    spacing={0}
-                    direction="column"
-                    alignItems="center"
-                    justifyContent="center"
-                    style={{ minHeight: '10vh' }}>
+            <Grid container direction="row" alignItems="center" justifyContent="center">
                 <p>Add Student: </p>
-                <IconButton padding="5px">
+                <IconButton>
                     <AddReactionIcon />
                 </IconButton>
+            </Grid>
+            <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '10vh' }}>
                 <List sx={{ ...commonStyles, borderRadius: '4px'}} component="nav" aria-label="mailbox folders">
                     {
                         students.map((student) => {
@@ -94,7 +91,7 @@ const StudentDirectory = () => {
                                 <ListItem style={{ hoverStyle }}>
                                     <ListItemText primary={student.firstname} fontSize="0.7em"/>
                                     <ListItemIcon>
-                                        <IconButton onClick={modalClick} edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
+                                        <IconButton onClick={() => {modalClick(student.id); }} edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
                                             <EditIcon />
                                         </IconButton>
                                     </ListItemIcon>
@@ -112,6 +109,8 @@ const StudentDirectory = () => {
                 </List>
             </Grid>
             <Dialog open={isClicked} keepMounted onClose={modalClick}>
+                <WindowsPopup />
+                    
                 <DialogTitle>{"Example Student"}</DialogTitle>
                 <DialogContent>
                     <TextField autoFocus margin="dense" id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
