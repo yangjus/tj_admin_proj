@@ -80,7 +80,7 @@ const EditStaff = (props) => {
         <Dialog open={isDeleteOpen}>
             <DialogTitle>Are you sure you want to delete this staff's profile ({props.firstname} {props.lastname})?</DialogTitle>
             <DialogActions>
-                <Button onClick={deleteClick}>Save</Button>
+                <Button onClick={deleteClick}>Confirm</Button>
                 <Button onClick={deleteClick}>Exit</Button>
             </DialogActions>
         </Dialog>
