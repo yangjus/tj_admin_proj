@@ -5,7 +5,7 @@ import {Button, Dialog, DialogContent, DialogTitle, TextField, Typography, Grid}
 import db from '../firebase.js'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import {collection, doc, getDocs, updateDoc, setDoc} from "firebase/firestore";
+import {collection, doc, getDocs, updateDoc, setDoc, deleteDoc} from "firebase/firestore";
 import ClearIcon from '@mui/icons-material/Clear';
 import Event from './Event.js'
 
@@ -55,15 +55,29 @@ const SchoolCalendar = () => {
         showEvents();
     }, []);
 
-    console.log(events)
-
     const addEvent = async() =>{
       setDoc(doc(db, "events", inputTitle), {
         date: inputDate,
         title: inputTitle
       });
+      setEvents([...events, {title: inputTitle, date: inputDate}])
       handleaddClose();
     }
+
+
+
+    const deleteEvent = async(title, date) =>{
+       await deleteDoc(doc(db, "events", title));
+       let list = []
+       for (let i = 0; i < events.length; i++) {
+         if (events[i]["title"] != title){
+           list.push(events[i])
+         }
+       }
+
+       setEvents(list)
+    }
+
 
     return (
         <>
@@ -93,13 +107,13 @@ const SchoolCalendar = () => {
             </DialogContent>
         </Dialog>
         <Dialog open={ModelDelOpen}>
-            <Grid item marginTop={2} marginLeft={28}>
+            <Grid item marginTop={2} marginLeft={38}>
               <ClearIcon onClick={handleDelClose}></ClearIcon>
             </Grid>
             <DialogTitle>List of Events</DialogTitle>
             <DialogContent>
             {Object.entries(events).map(([key, value]) => (
-              <Event data={value}/>
+              <p> Name: {value.title} Date: {value.date} <Button onClick={() => deleteEvent(value.title, value.date)}>Delete</Button> </p>
             ))}
             </DialogContent>
         </Dialog>

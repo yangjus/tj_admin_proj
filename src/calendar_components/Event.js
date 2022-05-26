@@ -18,7 +18,7 @@ function Event(props) {
   return (
     <div className="Event">
       <p> Name: {props.data.title} Date: {props.data.date} </p>
-      <Button onClick={deleteEvent} variant="contained">Delete</Button>
+      <Button onClick={props.func(props.data.title)} variant="contained">Delete</Button>
     </div>
   );
 }
