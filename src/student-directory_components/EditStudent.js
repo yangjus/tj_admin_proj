@@ -1,5 +1,5 @@
-import { React, useState } from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
+import { React, useState, useRef } from 'react';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from '@mui/material';
 import {ListItem, ListItemIcon, ListItemText, IconButton, Divider} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
@@ -12,9 +12,18 @@ const EditStudent = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
+    const firstnameForm = useRef();
+    const lastnameForm = useRef();
+    const birthdayForm = useRef();
+    const gradeForm = useRef();
+
     function modalClick(e){
         e.preventDefault();
         setIsOpen(!isOpen);
+        console.log("Saved First Name: ", firstnameForm.current.value());
+        console.log("Saved Last Name: ", lastnameForm.current.value());
+        console.log("Saved Grade: ", gradeForm.current.value());
+        console.log("Saved Birthday: ", birthdayForm.current.value());
     }
 
     function deleteClick(e){
@@ -25,24 +34,6 @@ const EditStudent = (props) => {
     const editFirstName = (studentID, newFirstName) => {
         updateDoc(doc(db, "students", studentID)), {
             firstname: newFirstName
-        }
-    }
-    
-    const editLastName = (studentID, newLastName) => {
-        updateDoc(doc(db, "students", studentID)), {
-            lastname: newLastName
-        }
-    }
-    
-    const editBirth = (studentID, newBirthday) => {
-        updateDoc(doc(db, "students", studentID)), {
-            birthday: newBirthday
-        }
-    }
-    
-    const editGrade = (studentID, newGrade) => {
-        updateDoc(doc(db, "students", studentID)), {
-            grade: newGrade
         }
     }
 
@@ -73,12 +64,12 @@ const EditStudent = (props) => {
         </div>
 
         <Dialog open={isOpen}>
-            <DialogTitle>{props.firstname} {props.lastname}</DialogTitle>
+            <DialogTitle>{props.firstname}</DialogTitle>
             <DialogContent>
-                <TextField autoFocus margin="dense" id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" id="grade" label="Grade" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
+                <TextField autoFocus margin="dense" inputRef={firstnameForm} id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
+                <TextField autoFocus margin="dense" inputRef={lastnameForm} id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
+                <TextField autoFocus margin="dense" inputRef={gradeForm} id="grade" label="Grade" type="text" fullWidth variant="standard"/>
+                <TextField autoFocus margin="dense" inputRef={birthdayForm} id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={modalClick}>Save</Button>
@@ -86,7 +77,7 @@ const EditStudent = (props) => {
             </DialogActions>
         </Dialog>
         <Dialog open={isDeleteOpen}>
-            <DialogTitle>Are you sure you want to delete {props.firstname}?</DialogTitle>
+            <DialogTitle>Are you sure you want to delete this student's profile ({props.firstname})?</DialogTitle>
             <DialogActions>
                 <Button onClick={deleteClick}>Save</Button>
                 <Button onClick={deleteClick}>Exit</Button>

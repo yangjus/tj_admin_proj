@@ -3,7 +3,7 @@ import Navbar from '../Navbar.js';
 import {List, IconButton, Grid} from '@mui/material';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import db from '../firebase.js'
-import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
+import {collection, getDocs} from "firebase/firestore";
 import { useLocation } from "react-router-dom";
 import EditStudent from './EditStudent.js';
 
