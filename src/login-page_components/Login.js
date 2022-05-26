@@ -1,11 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Box, AppBar, Toolbar, Typography, TextField, Button } from '@mui/material';
-import { Link } from "react-router-dom";
 import './Login.css';
 import db from "../firebase.js"
 import { useNavigate } from "react-router-dom";
-import {collection, doc, getDocs, updateDoc, setDoc} from "firebase/firestore";
+import {collection, doc, getDocs, setDoc} from "firebase/firestore";
 
 const Login = (props) => {
     let navigate = useNavigate();

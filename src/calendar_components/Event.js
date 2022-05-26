@@ -1,7 +1,8 @@
-import {Button, Dialog, DialogContent, DialogTitle, TextField, Typography, Grid} from '@mui/material';
+import {IconButton, Grid} from '@mui/material';
 import db from '../firebase.js'
-import {collection, doc, getDocs, updateDoc, setDoc, deleteDoc} from "firebase/firestore";
+import {doc, deleteDoc} from "firebase/firestore";
 import { useNavigate, useLocation } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Event(props) {
   let navigate = useNavigate()
@@ -17,8 +18,12 @@ function Event(props) {
   console.log(props.data)
   return (
     <div className="Event">
-      <p> Name: {props.data.title} Date: {props.data.date} </p>
-      <Button onClick={deleteEvent} variant="contained">Delete</Button>
+      <Grid container direction="row" alignItems="center" justifyContent="center">
+        <p><b>Name:</b> {props.data.title} | <b>Date:</b> {props.data.date} </p>
+        <IconButton onClick={deleteEvent} variant="contained">
+          <DeleteIcon />
+        </IconButton>
+      </Grid>
     </div>
   );
 }

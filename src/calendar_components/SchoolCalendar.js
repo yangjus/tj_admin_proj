@@ -95,7 +95,7 @@ const SchoolCalendar = () => {
             </DialogContent>
         </Dialog>
         <Dialog open={ModelDelOpen}>
-            <Grid item marginTop={2} marginLeft={28}>
+            <Grid item marginTop={2} marginLeft={35}>
               <ClearIcon onClick={handleDelClose}></ClearIcon>
             </Grid>
             <DialogTitle>List of Events</DialogTitle>

@@ -1,11 +1,10 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import Navbar from "../Navbar.js";
 import {Grid, Button} from '@mui/material';
 import TJES from './images/TJES.JPG'
-import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Home = (props) => {
+const Home = () => {
     const navigate = useNavigate()
 
     const btnSize = {
