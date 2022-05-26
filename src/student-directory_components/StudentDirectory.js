@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar.js';
-import {List, ListItem, ListItemText, IconButton, Grid, Divider} from '@mui/material';
+import {List, ListItem, ListItemIcon, ListItemText, IconButton, Grid, Divider, TextField} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import db from '../firebase.js'
-import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
-import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
+import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
+import { useLocation } from "react-router-dom";
+import {Modal, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
 
 const StudentDirectory = () => {
 
-    const [students, setStudents] = useState([])
+    const {state} = useLocation();
+    const { username } = state; /*the user */
     const [isClicked, setIsClicked] = useState(false);
 
+    const [students, setStudents] = useState([])
+
+    const printStudents = async () => {
+        const documents = await getDocs(collection(db, "students"));
+        console.log(documents);
+        let list = [];
+        documents.forEach((student) => list.push({id: student.id, ...student.data()}));
+        setStudents(list);
+    }
+    
     useEffect(() => {
-    const students = []
-    getDocs(collection(db, "students"))
-    .then((allStudents) => allStudents.forEach((student) => students.push({id: student.id, ...student.data()}))
-    )
-    setStudents(students)
-    }, [db])
+        printStudents();
+    }, []);
 
     const editFirstName = (studentID, newFirstName) => {
         updateDoc(doc(db, "students", studentID)), {
@@ -63,85 +65,65 @@ const StudentDirectory = () => {
         width: '80vh',
     };
 
+    const hoverStyle = {
+        bgcolor: '#ADD8E6',
+        '&:hover $child': {
+            color: 'blue'
+        }
+    };
+
     return (
         <>
             <Navbar />
             <h1>Student Directory</h1>
-            <IconButton>
-              <AddReactionIcon />
-            </IconButton>
             <Grid   container
                     spacing={0}
                     direction="column"
                     alignItems="center"
                     justifyContent="center"
                     style={{ minHeight: '10vh' }}>
+                <p>Add Student: </p>
+                <IconButton padding="5px">
+                    <AddReactionIcon />
+                </IconButton>
                 <List sx={{ ...commonStyles, borderRadius: '4px'}} component="nav" aria-label="mailbox folders">
-                    <ListItem secondaryAction={
-                        <IconButton onClick = {modalClick} edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
-                            <EditIcon />
-                        </IconButton>} button>
-                        <ListItemText primary="Fred Dundert" fontsize="0.7em"/>
-                    </ListItem>
-                    <Divider light/>
-                    <ListItem secondaryAction={
-                        <IconButton onClick = {modalClick} edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
-                            <EditIcon />
-                        </IconButton>} button>
-                        <ListItemText primary="Danny Sins" fontsize="0.7em"/>
-                    </ListItem>
+                    {
+                        students.map((student) => {
+                            return (
+                                <div key={student.id}>
+                                <ListItem style={{ hoverStyle }}>
+                                    <ListItemText primary={student.firstname} fontSize="0.7em"/>
+                                    <ListItemIcon>
+                                        <IconButton onClick={modalClick} edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </ListItemIcon>
+                                    <ListItemIcon>
+                                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'red'}}>
+                                            <PersonRemoveIcon />
+                                        </IconButton>
+                                    </ListItemIcon>
+                                </ListItem>
+                                <Divider light/>
+                                </div>
+                            )
+                        })
+                    }
                 </List>
             </Grid>
-
-      <Dialog
-        open={isClicked}
-        keepMounted
-        onClose={modalClick}
-      >
-        <DialogTitle>{"Example Student"}</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="firstname"
-            label="First Name"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="lastname"
-            label="Last Name"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="birthday"
-            label="Birthday"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="grade"
-            label="Grade"
-            type="number"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={modalClick}>Save</Button>
-          <Button onClick={modalClick}>Exit</Button>
-        </DialogActions>
-      </Dialog>
+            <Dialog open={isClicked} keepMounted onClose={modalClick}>
+                <DialogTitle>{"Example Student"}</DialogTitle>
+                <DialogContent>
+                    <TextField autoFocus margin="dense" id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
+                    <TextField autoFocus margin="dense" id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
+                    <TextField autoFocus margin="dense" id="grade" label="Grade" type="text" fullWidth variant="standard"/>
+                    <TextField autoFocus margin="dense" id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={modalClick}>Save</Button>
+                    <Button onClick={modalClick}>Exit</Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
 }
