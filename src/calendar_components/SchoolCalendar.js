@@ -112,7 +112,7 @@ const SchoolCalendar = () => {
             <DialogContent>
             {Object.entries(events).map(([key, value]) => (
               <div key={key}>
-                <p>Name: {value.title} Date: {value.date} <Button onClick={() => deleteEvent(value.title, value.date)}>Delete</Button></p>
+                <p><b>Name:</b> {value.title} | <b>Date:</b> {value.date}<Button onClick={() => deleteEvent(value.title, value.date)}>Delete</Button></p>
               </div>
             ))}
             </DialogContent>
