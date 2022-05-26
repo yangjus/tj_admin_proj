@@ -85,7 +85,7 @@ const StudentDirectory = () => {
                     </ListItem>
                     <Divider light/>
                     <ListItem secondaryAction={
-                        <IconButton edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
+                        <IconButton onClick = {modalClick} edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
                             <EditIcon />
                         </IconButton>} button>
                         <ListItemText primary="Danny Sins" fontsize="0.7em"/>
