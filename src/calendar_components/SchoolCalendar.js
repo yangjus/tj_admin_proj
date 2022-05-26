@@ -7,6 +7,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import {collection, doc, getDocs, updateDoc, setDoc} from "firebase/firestore";
 import ClearIcon from '@mui/icons-material/Clear';
+import Event from './Event.js'
 
 
 const SchoolCalendar = () => {
@@ -64,10 +65,6 @@ const SchoolCalendar = () => {
       handleaddClose();
     }
 
-    function closeAddWindow(){
-      handleaddClose();
-    }
-
     return (
         <>
         <Navbar/>
@@ -77,15 +74,12 @@ const SchoolCalendar = () => {
                 <Button variant="contained" onClick={handleaddOpen}>Add Event</Button>
             </Grid>
             <Grid item xs={1.5}>
-                <Button color="secondary" variant="contained" onClick={handleEditOpen}>Edit Event</Button>
-            </Grid>
-            <Grid item xs={1.5}>
                 <Button color="error" variant="contained" onClick={handleDelOpen}>Delete Event</Button>
             </Grid>
         </Grid>
         <Dialog open={ModeladdOpen}>
             <Grid item marginTop={2} marginLeft={28}>
-              <ClearIcon onClick={closeAddWindow}></ClearIcon>
+              <ClearIcon onClick={handleaddClose}></ClearIcon>
             </Grid>
             <DialogTitle>Add Event</DialogTitle>
             <DialogContent>
@@ -96,6 +90,17 @@ const SchoolCalendar = () => {
                 <Grid item marginTop={2}>
                   <div className='addButton'><Button variant="contained" justifyContent= "center" onClick={addEvent}>Add Event</Button></div>
                 </Grid>
+            </DialogContent>
+        </Dialog>
+        <Dialog open={ModelDelOpen}>
+            <Grid item marginTop={2} marginLeft={28}>
+              <ClearIcon onClick={handleDelClose}></ClearIcon>
+            </Grid>
+            <DialogTitle>List of Events</DialogTitle>
+            <DialogContent>
+            {Object.entries(events).map(([key, value]) => (
+              <Event data={value}/>
+            ))}
             </DialogContent>
         </Dialog>
         <FullCalendar
