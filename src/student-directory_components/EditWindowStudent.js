@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from '@mui/material';
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
 import {ListItem, ListItemIcon, ListItemText, IconButton, Divider} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
@@ -10,10 +10,16 @@ const EditWindowStudent = (props) => {
     console.log("here")
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
     function modalClick(e){
         e.preventDefault();
         setIsOpen(!isOpen);
+    }
+
+    function deleteClick(e){
+        e.preventDefault();
+        setIsDeleteOpen(!isDeleteOpen);
     }
 
     const hoverStyle = {
@@ -34,7 +40,7 @@ const EditWindowStudent = (props) => {
                 </IconButton>
             </ListItemIcon>
             <ListItemIcon>
-                <IconButton edge="end" style={{ color: 'white', backgroundColor: 'red'}}>
+                <IconButton onClick = {e => deleteClick(e)} edge="end" style={{ color: 'white', backgroundColor: 'red'}}>
                     <PersonRemoveIcon />
                 </IconButton>
             </ListItemIcon>
@@ -55,7 +61,15 @@ const EditWindowStudent = (props) => {
                 <Button onClick={modalClick}>Exit</Button>
             </DialogActions>
         </Dialog>
+        <Dialog open={isDeleteOpen}>
+            <DialogTitle>Are you sure you want to delete {props.firstname}?</DialogTitle>
+            <DialogActions>
+                <Button onClick={deleteClick}>Save</Button>
+                <Button onClick={deleteClick}>Exit</Button>
+            </DialogActions>
+        </Dialog>
         </>
+        
     );
 };
 
