@@ -55,13 +55,12 @@ const SchoolCalendar = () => {
         showEvents();
     }, []);
 
-    console.log(events)
-
     const addEvent = async() =>{
       setDoc(doc(db, "events", inputTitle), {
         date: inputDate,
         title: inputTitle
       });
+      setEvents([...events, {title: inputTitle, date: inputDate}])
       handleaddClose();
     }
 
@@ -91,7 +90,7 @@ const SchoolCalendar = () => {
                 <Typography variant="h6">Date</Typography>
                 <TextField onChange={(e) => {setInputDate(e.target.value)}}>date</TextField>
                 <Grid item marginTop={2}>
-                  <div className='addButton'><Button variant="contained" justifyContent= "center" onClick={addEvent}>Add Event</Button></div>
+                  <div className='addButton'><Button variant="contained" justifycontent= "center" onClick={addEvent}>Add Event</Button></div>
                 </Grid>
             </DialogContent>
         </Dialog>
@@ -102,7 +101,9 @@ const SchoolCalendar = () => {
             <DialogTitle>List of Events</DialogTitle>
             <DialogContent>
             {Object.entries(events).map(([key, value]) => (
-              <Event data={value}/>
+              <div key={key}>
+                <Event data={value}/>
+              </div>
             ))}
             </DialogContent>
         </Dialog>

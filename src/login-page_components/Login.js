@@ -26,8 +26,6 @@ const Login = (props) => {
         : setLogged(false)))})
     }
 
-    console.log(db)
-
     return (
         <div className="Login">
           <Box sx={{ flexGrow: 1 }}>
