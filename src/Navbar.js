@@ -27,6 +27,10 @@ const Navbar = () => {
       navigate("/teacher-directory", { state: {username: username}})
     }
 
+    function classOnClick(){
+      navigate("/classes", { state: {username: username}})
+    }
+
     function calendarOnClick(){
       navigate("/calendar", { state: {username: username}})
     }
@@ -61,6 +65,7 @@ const Navbar = () => {
                         <Button color="inherit" onClick={homeOnClick}>Home</Button>
                         <Button color="inherit" onClick={studentOnClick}>Student Directory</Button>
                         <Button color="inherit" onClick={teacherOnClick}>Teacher Directory</Button>
+                        <Button color="inherit" onClick={classOnClick}>Classes</Button>
                         <Button color="inherit" onClick={calendarOnClick}>Calendar</Button>
                         <Button color="inherit" onClick={logoutOnClick}>Logout</Button>
                 </Toolbar>

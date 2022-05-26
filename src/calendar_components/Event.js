@@ -18,12 +18,8 @@ function Event(props) {
   console.log(props.data)
   return (
     <div className="Event">
-      <Grid container direction="row" alignItems="center" justifyContent="center">
-        <p><b>Name:</b> {props.data.title} | <b>Date:</b> {props.data.date} </p>
-        <IconButton onClick={deleteEvent} variant="contained">
-          <DeleteIcon />
-        </IconButton>
-      </Grid>
+      <p><b>Name:</b> {props.data.title} | <b>Date:</b> {props.data.date} </p>
+      <Button onClick={props.func(props.data.title)} variant="contained">Delete</Button>
     </div>
   );
 }

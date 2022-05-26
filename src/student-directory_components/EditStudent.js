@@ -55,7 +55,7 @@ const EditStudent = (props) => {
         <>
         <div key={props.studentId}>
         <ListItem style={{ hoverStyle }}>
-            <ListItemText primary={props.firstname} fontSize="0.7em"/>
+            <ListItemText primary={<p>{props.firstname} {props.lastname}</p>} fontSize="1em"/>
             <ListItemIcon>
                 <IconButton onClick={e => modalClick(e)} edge="end" style={{ color: 'white', backgroundColor: 'green'}}>
                     <EditIcon />
