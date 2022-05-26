@@ -37,9 +37,10 @@ const Navbar = () => {
         ?(setDoc(doc(db, "staff", "teacher1"), {
             isLogged: false,
             isAdmin: d.data().isAdmin,
-            name: d.data().name,
             password: d.data().password,
-            username: d.data().username
+            username: d.data().username,
+            firstname: d.data().firstname,
+            lastname: d.data().lastname,
           }), navigate("/", { state: {username: d.data().username }}))
         : console.log()))})
     }

@@ -15,12 +15,13 @@ const Login = (props) => {
     function getCredentials(){
       getDocs(collection(db, "staff"))
       .then((allDocs) => {allDocs.forEach((d) => (((String(username) == String(d.data().username)) && (String(password) == String(d.data().password)))
-        ?(setLogged(true), setDoc(doc(db, "staff", d.data().name), {
+        ?(setLogged(true), setDoc(doc(db, "staff", d.data().username), {
             isLogged: true,
             isAdmin: d.data().isAdmin,
-            name: d.data().name,
             password: d.data().password,
-            username: d.data().username
+            username: d.data().username,
+            firstname: d.data().firstname,
+            lastname: d.data().lastname,
           }), navigate("/home", { state: {username: d.data().username }}))
         : setLogged(false)))})
     }

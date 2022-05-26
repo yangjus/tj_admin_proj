@@ -6,7 +6,7 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import {doc, updateDoc} from "firebase/firestore";
 import db from "../firebase.js";
 
-const EditStudent = (props) => {
+const EditStaff = (props) => {
 
     console.log(props);
     console.log("here");
@@ -16,8 +16,6 @@ const EditStudent = (props) => {
 
     const firstnameForm = useRef();
     const lastnameForm = useRef();
-    const birthdayForm = useRef();
-    const gradeForm = useRef();
 
     function modalClick(e){
         e.preventDefault();
@@ -29,19 +27,15 @@ const EditStudent = (props) => {
         setIsDeleteOpen(!isDeleteOpen);
     };
     
-    const updateStudentInfo = async() => {
+    const updateStaffInfo = async() => {
         console.log("Saved First Name: ", firstnameForm.current.value);
         console.log("Saved Last Name: ", lastnameForm.current.value);
-        console.log("Saved Grade: ", gradeForm.current.value);
-        console.log("Saved Birthday: ", birthdayForm.current.value);
         let obj = {
             firstname: firstnameForm.current.value,
             lastname: lastnameForm.current.value,
-            grade: gradeForm.current.value,
-            birthday: birthdayForm.current.value
         }
         console.log(obj);
-        await updateDoc(doc(db, "students", props.studentId), obj);
+        await updateDoc(doc(db, "staff", props.memberId), obj);
     };
 
     const hoverStyle = {
@@ -53,7 +47,7 @@ const EditStudent = (props) => {
 
     return (
         <>
-        <div key={props.studentId}>
+        <div key={props.memberId}>
         <ListItem style={{ hoverStyle }}>
             <ListItemText primary={props.firstname} fontSize="0.7em"/>
             <ListItemIcon>
@@ -77,18 +71,14 @@ const EditStudent = (props) => {
                 id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
                 <TextField autoFocus margin="dense" inputRef={lastnameForm} defaultValue={props.lastname} 
                 id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" inputRef={gradeForm} defaultValue={props.grade} 
-                id="grade" label="Grade" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" inputRef={birthdayForm} defaultValue={props.birthday} 
-                id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
             </DialogContent>
             <DialogActions>
-                <Button onClick={(e) => {updateStudentInfo(); modalClick(e)}}>Save</Button>
+                <Button onClick={(e) => {updateStaffInfo(); modalClick(e)}}>Save</Button>
                 <Button onClick={modalClick}>Exit</Button>
             </DialogActions>
         </Dialog>
         <Dialog open={isDeleteOpen}>
-            <DialogTitle>Are you sure you want to delete this student's profile ({props.firstname} {props.lastname})?</DialogTitle>
+            <DialogTitle>Are you sure you want to delete this staff's profile ({props.firstname} {props.lastname})?</DialogTitle>
             <DialogActions>
                 <Button onClick={deleteClick}>Save</Button>
                 <Button onClick={deleteClick}>Exit</Button>
@@ -98,4 +88,4 @@ const EditStudent = (props) => {
     );
 };
 
-export default EditStudent;
+export default EditStaff;
