@@ -5,7 +5,7 @@ import AddReactionIcon from '@mui/icons-material/AddReaction';
 import db from '../firebase.js'
 import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
 import { useLocation } from "react-router-dom";
-import EditWindowStudent from './EditWindowStudent.js';
+import EditStudent from './EditStudent.js';
 
 const StudentDirectory = () => {
 
@@ -25,30 +25,6 @@ const StudentDirectory = () => {
     useEffect(() => {
         printStudents();
     }, []);
-
-    const editFirstName = (studentID, newFirstName) => {
-        updateDoc(doc(db, "students", studentID)), {
-            firstname: newFirstName
-        }
-    }
-    
-    const editLastName = (studentID, newLastName) => {
-        updateDoc(doc(db, "students", studentID)), {
-            lastname: newLastName
-        }
-    }
-    
-    const editBirth = (studentID, newBirthday) => {
-        updateDoc(doc(db, "students", studentID)), {
-            birthday: newBirthday
-        }
-    }
-    
-    const editGrade = (studentID, newGrade) => {
-        updateDoc(doc(db, "students", studentID)), {
-            grade: newGrade
-        }
-    }
 
     const commonStyles = {
         bgcolor: '#ADD8E6',
@@ -75,7 +51,7 @@ const StudentDirectory = () => {
                 {
                     students.map((student) => {
                         console.log(student)
-                        return (<EditWindowStudent studentId={student.id} firstname={student.firstname}/>)
+                        return (<EditStudent studentId={student.id} firstname={student.firstname}/>)
                     })
                 }
             </List>

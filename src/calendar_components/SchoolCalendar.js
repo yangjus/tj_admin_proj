@@ -44,9 +44,9 @@ const SchoolCalendar = () => {
             <Grid item xs={1.5}>
                 <Button variant="contained" onClick={handleaddOpen}>Add Event</Button>
             </Grid>
-            <Grid item xs={1.5}>
+            {/*<Grid item xs={1.5}>
                 <Button color="secondary" variant="contained" onClick={handleEditOpen}>Edit Event</Button>
-            </Grid>
+            </Grid>*/}
             <Grid item xs={1.5}>
                 <Button color="error" variant="contained" onClick={handleDelOpen}>Delete Event</Button>
             </Grid>
