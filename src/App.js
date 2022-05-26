@@ -4,7 +4,7 @@ import Login from './login-page_components/Login.js';
 import StudentDirectory from './student-directory_components/StudentDirectory.js';
 import TeacherDirectory from './teacher-directory_components/TeacherDirectory.js';
 import Classes from './classes_components/Classes.js';
-import Calendar from './calendar_components/Calendar.js';
+import SchoolCalendar from './calendar_components/SchoolCalendar.js';
 import Error from './Error.js';
 import { Routes, Route } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ function App() {
         <Route path="/student-directory" element={<StudentDirectory />}/>
         <Route path="/teacher-directory" element={<TeacherDirectory />}/>
         <Route path="/classes" element={<Classes />}/>
-        <Route path="/calendar" element={<Calendar />}/>
+        <Route path="/calendar" element={<SchoolCalendar />}/>
         <Route path="*" element={<Error />}/>
       </Routes>
     </div>

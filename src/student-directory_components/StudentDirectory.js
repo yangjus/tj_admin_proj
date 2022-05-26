@@ -109,8 +109,6 @@ const StudentDirectory = () => {
                 </List>
             </Grid>
             <Dialog open={isClicked} keepMounted onClose={modalClick}>
-                <WindowsPopup />
-                    
                 <DialogTitle>{"Example Student"}</DialogTitle>
                 <DialogContent>
                     <TextField autoFocus margin="dense" id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
