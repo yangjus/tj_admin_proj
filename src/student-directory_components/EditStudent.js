@@ -67,7 +67,7 @@ const EditStudent = (props) => {
         </div>
 
         <Dialog open={isOpen}>
-            <DialogTitle>{props.firstname}</DialogTitle>
+            <DialogTitle>{props.firstname} {props.lastname}</DialogTitle>
             <DialogContent>
                 <TextField autoFocus margin="dense" id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
                 <TextField autoFocus margin="dense" id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
