@@ -3,11 +3,13 @@ import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} fr
 import {ListItem, ListItemIcon, ListItemText, IconButton, Divider} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import {doc, updateDoc} from "firebase/firestore";
+import db from "../firebase.js";
 
 const EditStudent = (props) => {
 
     console.log(props);
-    console.log("here")
+    console.log("here");
 
     const [isOpen, setIsOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -20,22 +22,25 @@ const EditStudent = (props) => {
     function modalClick(e){
         e.preventDefault();
         setIsOpen(!isOpen);
-        console.log("Saved First Name: ", firstnameForm.current.value());
-        console.log("Saved Last Name: ", lastnameForm.current.value());
-        console.log("Saved Grade: ", gradeForm.current.value());
-        console.log("Saved Birthday: ", birthdayForm.current.value());
-    }
+    };
 
     function deleteClick(e){
         e.preventDefault();
         setIsDeleteOpen(!isDeleteOpen);
-    }
+    };
     
-    const editFirstName = (studentID, newFirstName) => {
-        updateDoc(doc(db, "students", studentID)), {
-            firstname: newFirstName
+    const updateStudentInfo = async() => {
+        await updateDoc(doc(db, "students", props.studentId)), {
+            firstname: firstnameForm.current.value,
+            lastname: lastnameForm.current.value,
+            grade: gradeForm.current.value,
+            birthday: birthdayForm.current.value
         }
-    }
+        console.log("Saved First Name: ", firstnameForm.current.value);
+        console.log("Saved Last Name: ", lastnameForm.current.value);
+        console.log("Saved Grade: ", gradeForm.current.value);
+        console.log("Saved Birthday: ", birthdayForm.current.value);
+    };
 
     const hoverStyle = {
         bgcolor: '#ADD8E6',
@@ -64,15 +69,19 @@ const EditStudent = (props) => {
         </div>
 
         <Dialog open={isOpen}>
-            <DialogTitle>{props.firstname}</DialogTitle>
+            <DialogTitle>{props.firstname} {props.lastname}</DialogTitle>
             <DialogContent>
-                <TextField autoFocus margin="dense" inputRef={firstnameForm} id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" inputRef={lastnameForm} id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" inputRef={gradeForm} id="grade" label="Grade" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" inputRef={birthdayForm} id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
+                <TextField autoFocus margin="dense" inputRef={firstnameForm} defaultValue={props.firstname} 
+                id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
+                <TextField autoFocus margin="dense" inputRef={lastnameForm} defaultValue={props.lastname} 
+                id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
+                <TextField autoFocus margin="dense" inputRef={gradeForm} defaultValue={props.grade} 
+                id="grade" label="Grade" type="text" fullWidth variant="standard"/>
+                <TextField autoFocus margin="dense" inputRef={birthdayForm} defaultValue={props.birthday} 
+                id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
             </DialogContent>
             <DialogActions>
-                <Button onClick={modalClick}>Save</Button>
+                <Button onClick={() => {updateStudentInfo(); modalClick}}>Save</Button>
                 <Button onClick={modalClick}>Exit</Button>
             </DialogActions>
         </Dialog>

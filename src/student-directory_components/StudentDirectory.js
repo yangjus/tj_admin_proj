@@ -51,7 +51,8 @@ const StudentDirectory = () => {
                 {
                     students.map((student) => {
                         console.log(student)
-                        return (<EditStudent studentId={student.id} firstname={student.firstname}/>)
+                        return (<EditStudent studentId={student.id} firstname={student.firstname} 
+                            lastname={student.lastname} birthday={student.birthday} grade={student.grade}/>)
                     })
                 }
             </List>
