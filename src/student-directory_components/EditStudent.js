@@ -4,7 +4,7 @@ import {ListItem, ListItemIcon, ListItemText, IconButton, Divider} from '@mui/ma
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
-const EditWindowStudent = (props) => {
+const EditStudent = (props) => {
 
     console.log(props);
     console.log("here")
@@ -14,6 +14,30 @@ const EditWindowStudent = (props) => {
     function modalClick(e){
         e.preventDefault();
         setIsOpen(!isOpen);
+    }
+
+    const editFirstName = (studentID, newFirstName) => {
+        updateDoc(doc(db, "students", studentID)), {
+            firstname: newFirstName
+        }
+    }
+    
+    const editLastName = (studentID, newLastName) => {
+        updateDoc(doc(db, "students", studentID)), {
+            lastname: newLastName
+        }
+    }
+    
+    const editBirth = (studentID, newBirthday) => {
+        updateDoc(doc(db, "students", studentID)), {
+            birthday: newBirthday
+        }
+    }
+    
+    const editGrade = (studentID, newGrade) => {
+        updateDoc(doc(db, "students", studentID)), {
+            grade: newGrade
+        }
     }
 
     const hoverStyle = {
@@ -59,4 +83,4 @@ const EditWindowStudent = (props) => {
     );
 };
 
-export default EditWindowStudent;
+export default EditStudent;
