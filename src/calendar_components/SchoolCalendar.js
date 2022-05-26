@@ -6,6 +6,7 @@ import db from '../firebase.js'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import {collection, doc, getDocs, updateDoc, setDoc} from "firebase/firestore";
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const SchoolCalendar = () => {
@@ -63,6 +64,10 @@ const SchoolCalendar = () => {
       handleaddClose();
     }
 
+    function closeAddWindow(){
+      handleaddClose();
+    }
+
     return (
         <>
         <Navbar/>
@@ -79,6 +84,9 @@ const SchoolCalendar = () => {
             </Grid>
         </Grid>
         <Dialog open={ModeladdOpen}>
+            <Grid item marginTop={2} marginLeft={28}>
+              <ClearIcon onClick={closeAddWindow}></ClearIcon>
+            </Grid>
             <DialogTitle>Add Event</DialogTitle>
             <DialogContent>
                 <Typography variant="h6">Title</Typography>
