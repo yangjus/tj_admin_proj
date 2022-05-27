@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Navbar from '../Navbar.js';
 import {List, IconButton, Grid, Dialog, DialogActions, Button, DialogTitle, DialogContent, TextField} from '@mui/material';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import db from '../firebase.js'
-import {collection, getDocs} from "firebase/firestore";
+import {collection, getDocs, setDoc, doc } from "firebase/firestore";
 import { useLocation } from "react-router-dom";
 import EditStudent from './EditStudent.js';
 
@@ -14,6 +14,11 @@ const StudentDirectory = () => {
 
     const [students, setStudents] = useState([]);
     const [isAddOpen, setIsAddOpen] = useState(false);
+
+    const firstnameForm = useRef();
+    const lastnameForm = useRef();
+    const gradeForm = useRef();
+    const birthdayForm = useRef();
 
     const printStudents = async () => {
         const documents = await getDocs(collection(db, "students"));
@@ -49,8 +54,10 @@ const StudentDirectory = () => {
             grade: gradeForm.current.value,
             birthday: birthdayForm.current.value
         }
+        const nameIdString = "student_" + String(obj.firstname) + "_" + String(obj.lastname);
+        console.log(nameIdString);
         console.log(obj);
-        await setDoc(doc(db, "students", "ok"), obj);
+        await setDoc(doc(db, "students", nameIdString), obj);
     };
 
     return (
@@ -77,17 +84,17 @@ const StudentDirectory = () => {
         <Dialog open={isAddOpen}>
             <DialogTitle>Add New Student</DialogTitle>
             <DialogContent>
-                <TextField autoFocus margin="dense"
+                <TextField autoFocus margin="dense" inputRef={firstnameForm}
                 id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense"
+                <TextField autoFocus margin="dense" inputRef={lastnameForm}
                 id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense"
+                <TextField autoFocus margin="dense" inputRef={gradeForm}
                 id="grade" label="Grade" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense"
+                <TextField autoFocus margin="dense" inputRef={birthdayForm}
                 id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
             </DialogContent>
             <DialogActions>
-                <Button onClick={addClick}>Save</Button>
+                <Button onClick={(e) => {addStudent(); addClick(e)}}>Save</Button>
                 <Button onClick={addClick}>Exit</Button>
             </DialogActions>
         </Dialog>
