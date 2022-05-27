@@ -20,15 +20,18 @@ const Home = () => {
     }
 
     const {state} = useLocation();
-    const { username } = state || {};
+    const { username, userId } = state || {};
     console.log("Entering home page: ", username)
+    console.log(userId);
+    let theUserId = userId;
+    console.log(theUserId);
 
     function studentOnClick(){
       navigate("/student-directory", { state: {username: username}})
     }
 
     function teacherOnClick(){
-      navigate("/teacher-directory", { state: {username: username}})
+      navigate("/teacher-directory", { state: {userId: theUserId}})
     }
 
     function calendarOnClick(){

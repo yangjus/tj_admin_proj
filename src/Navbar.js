@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import db from './firebase.js';
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc  } from "firebase/firestore";
+import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, addDoc  } from "firebase/firestore";
 
 const Navbar = () => {
     let navigate = useNavigate();
@@ -38,13 +38,9 @@ const Navbar = () => {
     function logoutOnClick(){
       getDocs(collection(db, "staff"))
       .then((allDocs) => {allDocs.forEach((d) => ((String(username) == String(d.data().username))
-        ?(setDoc(doc(db, "staff", "teacher1"), {
+        ?(updateDoc(doc(db, "staff", d.id), {
             isLogged: false,
-            isAdmin: d.data().isAdmin,
-            password: d.data().password,
-            username: d.data().username,
-            firstname: d.data().firstname,
-            lastname: d.data().lastname,
+
           }), navigate("/", { state: {username: d.data().username }}))
         : console.log()))})
     }

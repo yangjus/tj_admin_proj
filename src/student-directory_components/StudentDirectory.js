@@ -10,7 +10,6 @@ import EditStudent from './EditStudent.js';
 const StudentDirectory = () => {
 
     const {state} = useLocation();
-    const { username } = state; /*the user */
 
     const [students, setStudents] = useState([]);
     const [isAddOpen, setIsAddOpen] = useState(false);
@@ -84,17 +83,17 @@ const StudentDirectory = () => {
         <Dialog open={isAddOpen}>
             <DialogTitle>Add New Student</DialogTitle>
             <DialogContent>
-                <TextField autoFocus margin="dense" inputRef={firstnameForm}
+                <TextField autoFocus margin="dense" inputRef={firstnameForm} 
                 id="firstname" label="First Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" inputRef={lastnameForm}
+                <TextField autoFocus margin="dense" inputRef={lastnameForm} 
                 id="lastname" label="Last Name" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" inputRef={gradeForm}
+                <TextField autoFocus margin="dense" inputRef={gradeForm} 
                 id="grade" label="Grade" type="text" fullWidth variant="standard"/>
-                <TextField autoFocus margin="dense" inputRef={birthdayForm}
+                <TextField autoFocus margin="dense" inputRef={birthdayForm} placeholder='YYYY-MM-DD' 
                 id="birthday" label="Birthday" type="text" fullWidth variant="standard"/>
             </DialogContent>
             <DialogActions>
-                <Button onClick={(e) => {addStudent(); addClick(e)}}>Save</Button>
+                <Button onClick={(e) => {addStudent(); addClick(e)}}>Create</Button>
                 <Button onClick={addClick}>Exit</Button>
             </DialogActions>
         </Dialog>

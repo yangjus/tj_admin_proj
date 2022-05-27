@@ -4,7 +4,7 @@ import { Box, AppBar, Toolbar, Typography, TextField, Button } from '@mui/materi
 import './Login.css';
 import db from "../firebase.js"
 import { useNavigate } from "react-router-dom";
-import {collection, doc, getDocs, setDoc} from "firebase/firestore";
+import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
 
 const Login = (props) => {
     let navigate = useNavigate();
@@ -15,14 +15,9 @@ const Login = (props) => {
     function getCredentials(){
       getDocs(collection(db, "staff"))
       .then((allDocs) => {allDocs.forEach((d) => (((String(username) == String(d.data().username)) && (String(password) == String(d.data().password)))
-        ?(setLogged(true), setDoc(doc(db, "staff", d.data().username), {
+        ?(setLogged(true), updateDoc(doc(db, "staff", d.id), {
             isLogged: true,
-            isAdmin: d.data().isAdmin,
-            password: d.data().password,
-            username: d.data().username,
-            firstname: d.data().firstname,
-            lastname: d.data().lastname,
-          }), navigate("/home", { state: {username: d.data().username }}))
+          }), navigate("/home", { state: {userId: d.data().userID, username: d.data().username}}))
         : setLogged(false)))})
     }
 

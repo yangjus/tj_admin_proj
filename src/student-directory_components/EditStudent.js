@@ -31,6 +31,7 @@ const EditStudent = (props) => {
 
     function actuallyDeleteClick() {
         deleteDoc(doc(db, "students", props.studentId));
+        console.log("Deleted student: ", props.studentId);
     }
     
     const updateStudentInfo = async() => {
