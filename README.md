@@ -2,13 +2,13 @@
 
 This project uses Javascript libraries and React framework. Includes Material UI, Firebase, Router-dom
 Install the following packages: npm install _ \
-firebase
-@mui/material
-@emotion/react
-@emotion/styled
-@mui/icons-material
-react-router-dom
-@fullcalendar/react
+firebase\
+@mui/material\
+@emotion/react\
+@emotion/styled\
+@mui/icons-material\
+react-router-dom\
+@fullcalendar/react\
 @fullcalendar/daygrid
 
 # Firebase Info
